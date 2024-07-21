@@ -41,19 +41,19 @@ public class WasteCategoryService {
 
 
     public void deleteCategoryById(Long id) {
+        
         if(categoriesRepository.existsById(id)){
             categoriesRepository.deleteById(id);
         }else{
             throw new WasteCategoryNotFoundException(id);
         }
         
-        
     }
 
     public WasteCategories updateCategory(WasteCategories category){
 
         if(category.getCategoryId() == null){
-            throw new IllegalArgumentException("The category cannot be null");
+            throw new IllegalArgumentException("The category id cannot be null");
         }else if(!categoriesRepository.existsById(category.getCategoryId())){
             throw new WasteCategoryNotFoundException(category.getCategoryId());
         }else{

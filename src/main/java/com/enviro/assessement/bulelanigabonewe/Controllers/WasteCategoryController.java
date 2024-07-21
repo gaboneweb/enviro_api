@@ -49,7 +49,7 @@ public class WasteCategoryController {
     }
 
 
-    @PostMapping("/new")
+    @PostMapping("/")
     public ResponseEntity<WasteCategories> addNewCategory(@RequestBody WasteCategories category){
         return ResponseEntity.ok(wasteCategoryService.addNewCategory(category));
     }
