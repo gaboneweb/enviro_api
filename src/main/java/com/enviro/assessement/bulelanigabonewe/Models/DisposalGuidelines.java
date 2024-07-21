@@ -28,7 +28,7 @@ public class DisposalGuidelines {
         strategy = GenerationType.SEQUENCE,
         generator = "guideline_sequence"
     )
-    private Long guideline_id;
+    private Long guidelineId;
 
     private String guideline;
 

@@ -6,8 +6,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.enviro.assessement.bulelanigabonewe.Exceptions.InvalidEntityException;
 import com.enviro.assessement.bulelanigabonewe.Exceptions.RecyclingTipNotFoundException;
 import com.enviro.assessement.bulelanigabonewe.Models.RecyclingTips;
+import com.enviro.assessement.bulelanigabonewe.Models.WasteCategories;
 import com.enviro.assessement.bulelanigabonewe.Repositories.RecyclingTipsRepository;
 
 @Service
@@ -47,6 +49,48 @@ public class RecyclingTipsService {
 
         recyclingTipsRepository.deleteRecyclingTipsByCategoryId(categoryId);
     }
+
+    public RecyclingTips updateRecyclingTip(RecyclingTips tip){
+
+        if(tip.getTipId() == null){
+            throw new IllegalArgumentException("The recyling tip id cannot be null");
+        }else if(!recyclingTipsRepository.existsById(tip.getTipId())){
+            throw new RecyclingTipNotFoundException(tip.getTipId());
+        }
+        else{
+            Optional<RecyclingTips> currentTip =  getRecyclingTipById(tip.getTipId());
+
+            if(!tip.getTip().isBlank() || !tip.getTip().isEmpty() && 
+                !tip.getTip().equalsIgnoreCase(currentTip.get().getTip())){
+                    currentTip.get().setTip(tip.getTip());
+            }
+
+            if(tip.getCategory().getCategoryId() != null &&
+            tip.getCategory().getCategoryId() != currentTip.get().getCategory().getCategoryId()){
+                WasteCategories category = new WasteCategories();
+                category.setCategoryId(tip.getCategory().getCategoryId());
+                currentTip.get().setCategory(category);
+            }
+
+            return recyclingTipsRepository.save(currentTip.get());
+        }
+    }
+
+
+    public RecyclingTips addNewRecyclingTip(RecyclingTips tip){
+
+       if(tip.getCategory() != null && tip.getCategory().getCategoryId() == null){
+
+            throw new IllegalArgumentException("The category id cannot be null");
+        }
+        else{
+            if(tip.getTip().isEmpty() || tip.getTip().isBlank()){
+                throw new InvalidEntityException("The tip cannot be null/empty");
+            }
+            return recyclingTipsRepository.save(tip);
+        }
+    }
+
 
 
 }

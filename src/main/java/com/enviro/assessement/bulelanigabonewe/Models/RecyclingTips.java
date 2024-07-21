@@ -28,7 +28,7 @@ public class RecyclingTips {
         strategy = GenerationType.SEQUENCE,
         generator = "recycling_sequence"
     )
-    private Long tip_id;
+    private Long tipId;
 
     private String tip;
 

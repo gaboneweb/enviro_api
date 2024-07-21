@@ -1,5 +1,6 @@
 package com.enviro.assessement.bulelanigabonewe.Exceptions;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -43,6 +44,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InvalidEntityException.class)
     public ResponseEntity<Response> handleInvalidEntityException(InvalidEntityException ex){
         Response errorResponse = new Response(HttpStatus.BAD_REQUEST.value(), ex.getMessage(), ResponseType.ERROR);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Response> handleDataIntegrityViolationException(DataIntegrityViolationException ex){
+        Response errorResponse = new Response(HttpStatus.BAD_REQUEST.value(), "Could not execute statement due to invalid id", ResponseType.ERROR);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 

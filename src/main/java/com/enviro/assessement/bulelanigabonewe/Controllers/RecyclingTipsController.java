@@ -9,6 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +20,7 @@ import com.enviro.assessement.bulelanigabonewe.Models.RecyclingTips;
 import com.enviro.assessement.bulelanigabonewe.Models.Response;
 import com.enviro.assessement.bulelanigabonewe.Models.ResponseType;
 import com.enviro.assessement.bulelanigabonewe.Services.RecyclingTipsService;
+
 
 @RestController
 @RequestMapping("/recycling-tips")
@@ -66,6 +70,14 @@ public class RecyclingTipsController {
     }
 
 
+    @PutMapping("/")
+    public ResponseEntity<RecyclingTips> updateDisposalGuideline(@RequestBody RecyclingTips tip ){
+        return ResponseEntity.ok(recyclingTipsService.updateRecyclingTip(tip));
+    }
 
+    @PostMapping("/")
+    public ResponseEntity<RecyclingTips> addNewDisposalGuideline(@RequestBody RecyclingTips tip ){
+        return ResponseEntity.ok(recyclingTipsService.addNewRecyclingTip(tip));
+    }
 
 }
