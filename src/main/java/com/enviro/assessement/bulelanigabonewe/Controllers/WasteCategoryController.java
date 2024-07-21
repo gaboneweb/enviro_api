@@ -1,6 +1,9 @@
 package com.enviro.assessement.bulelanigabonewe.Controllers;
 
 import java.util.List;
+import java.util.Optional;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,18 +26,24 @@ public class WasteCategoryController {
 
 
     @GetMapping("/{id}")
-    public WasteCategories getCategotiesById(@PathVariable Long id){
-        return wasteCategoryService.getWasteCategoryById(id)
-        .orElseThrow( ()-> new WasteCategoryNotFoundException(id));
+    public ResponseEntity<WasteCategories> getCategotiesById(@PathVariable Long id){
+        Optional<WasteCategories> categories = wasteCategoryService.getWasteCategoryById(id);
+
+        if(categories.isPresent()){
+            return ResponseEntity.ok(categories.get());
+        }
+
+        throw new WasteCategoryNotFoundException(id);
+        
     }
 
     @GetMapping("/")
-    public List<WasteCategories> getAllWasteCategories(){
-        return wasteCategoryService.getWasteCategories();
+    public ResponseEntity<List<WasteCategories>> getAllWasteCategories(){
+        return ResponseEntity.ok(wasteCategoryService.getWasteCategories());
     }
 
     @PostMapping("/new")
-    public WasteCategories addNewCategory(@RequestBody WasteCategories category){
-        return wasteCategoryService.addNewCategory(category);
+    public ResponseEntity<WasteCategories> addNewCategory(@RequestBody WasteCategories category){
+        return ResponseEntity.ok(wasteCategoryService.addNewCategory(category));
     }
 }
