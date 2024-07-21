@@ -1,6 +1,10 @@
 package com.enviro.assessement.bulelanigabonewe.Models;
 
 import lombok.Data;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
@@ -32,6 +36,7 @@ public class RecyclingTips {
     @JoinColumn(
         name="category_id"
     )
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private WasteCategories category;
 
     public RecyclingTips(){

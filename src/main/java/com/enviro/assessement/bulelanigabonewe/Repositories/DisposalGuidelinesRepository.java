@@ -12,7 +12,7 @@ import com.enviro.assessement.bulelanigabonewe.Models.DisposalGuidelines;
 @Repository 
 public interface DisposalGuidelinesRepository extends JpaRepository<DisposalGuidelines, Long>{
 
-    @Query("SELECT g FROM DisposalGuidelines g where g.category.category_id = ?1")
+    @Query("SELECT g FROM DisposalGuidelines g where g.category.categoryId = ?1")
     public List<DisposalGuidelines> findGuidelinesByCategoryId(Long categoryId);
 
 }

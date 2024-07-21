@@ -1,6 +1,10 @@
 package com.enviro.assessement.bulelanigabonewe.Models;
 
 import lombok.Data;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
@@ -28,10 +32,11 @@ public class DisposalGuidelines {
 
     private String guideline;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(
         name="category_id"
     )
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private WasteCategories category;
 
     public DisposalGuidelines(){
