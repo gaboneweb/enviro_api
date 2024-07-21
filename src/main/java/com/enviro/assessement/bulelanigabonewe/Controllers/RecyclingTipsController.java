@@ -23,7 +23,7 @@ import com.enviro.assessement.bulelanigabonewe.Services.RecyclingTipsService;
 
 
 @RestController
-@RequestMapping("/recycling-tips")
+@RequestMapping("/tips")
 public class RecyclingTipsController {
 
     private final RecyclingTipsService recyclingTipsService;

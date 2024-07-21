@@ -21,7 +21,7 @@ import com.enviro.assessement.bulelanigabonewe.Models.WasteCategories;
 import com.enviro.assessement.bulelanigabonewe.Services.WasteCategoryService;
 
 @RestController
-@RequestMapping("/waste-categories")
+@RequestMapping("/categories")
 public class WasteCategoryController {
     private final WasteCategoryService wasteCategoryService;
 
