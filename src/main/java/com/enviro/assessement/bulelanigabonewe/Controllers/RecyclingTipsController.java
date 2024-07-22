@@ -19,7 +19,10 @@ import com.enviro.assessement.bulelanigabonewe.Exceptions.RecyclingTipNotFoundEx
 import com.enviro.assessement.bulelanigabonewe.Models.RecyclingTips;
 import com.enviro.assessement.bulelanigabonewe.Models.Response;
 import com.enviro.assessement.bulelanigabonewe.Models.ResponseType;
+import com.enviro.assessement.bulelanigabonewe.RequestDTOs.RecyclingTipsDTO;
 import com.enviro.assessement.bulelanigabonewe.Services.RecyclingTipsService;
+
+import jakarta.validation.Valid;
 
 
 @RestController
@@ -71,12 +74,12 @@ public class RecyclingTipsController {
 
 
     @PutMapping("/")
-    public ResponseEntity<RecyclingTips> updateDisposalGuideline(@RequestBody RecyclingTips tip ){
+    public ResponseEntity<RecyclingTips> updateDisposalGuideline(@RequestBody @Valid RecyclingTipsDTO tip ){
         return ResponseEntity.ok(recyclingTipsService.updateRecyclingTip(tip));
     }
 
     @PostMapping("/")
-    public ResponseEntity<RecyclingTips> addNewDisposalGuideline(@RequestBody RecyclingTips tip ){
+    public ResponseEntity<RecyclingTips> addNewDisposalGuideline(@RequestBody @Valid RecyclingTipsDTO tip ){
         return ResponseEntity.ok(recyclingTipsService.addNewRecyclingTip(tip));
     }
 

@@ -11,6 +11,7 @@ import com.enviro.assessement.bulelanigabonewe.Exceptions.RecyclingTipNotFoundEx
 import com.enviro.assessement.bulelanigabonewe.Models.RecyclingTips;
 import com.enviro.assessement.bulelanigabonewe.Models.WasteCategories;
 import com.enviro.assessement.bulelanigabonewe.Repositories.RecyclingTipsRepository;
+import com.enviro.assessement.bulelanigabonewe.RequestDTOs.RecyclingTipsDTO;
 
 @Service
 public class RecyclingTipsService {
@@ -50,7 +51,7 @@ public class RecyclingTipsService {
         recyclingTipsRepository.deleteRecyclingTipsByCategoryId(categoryId);
     }
 
-    public RecyclingTips updateRecyclingTip(RecyclingTips tip){
+    public RecyclingTips updateRecyclingTip(RecyclingTipsDTO tip){
 
         if(tip.getTipId() == null){
             throw new IllegalArgumentException("The recyling tip id cannot be null");
@@ -65,10 +66,10 @@ public class RecyclingTipsService {
                     currentTip.get().setTip(tip.getTip());
             }
 
-            if(tip.getCategory().getCategoryId() != null &&
-            tip.getCategory().getCategoryId() != currentTip.get().getCategory().getCategoryId()){
+            if(tip.getCategoryId() != null &&
+            tip.getCategoryId() != currentTip.get().getCategory().getCategoryId()){
                 WasteCategories category = new WasteCategories();
-                category.setCategoryId(tip.getCategory().getCategoryId());
+                category.setCategoryId(tip.getCategoryId());
                 currentTip.get().setCategory(category);
             }
 
@@ -77,9 +78,9 @@ public class RecyclingTipsService {
     }
 
 
-    public RecyclingTips addNewRecyclingTip(RecyclingTips tip){
+    public RecyclingTips addNewRecyclingTip(RecyclingTipsDTO tip){
 
-       if(tip.getCategory() != null && tip.getCategory().getCategoryId() == null){
+       if(tip.getCategoryId() == null){
 
             throw new IllegalArgumentException("The category id cannot be null");
         }
@@ -87,7 +88,8 @@ public class RecyclingTipsService {
             if(tip.getTip().isEmpty() || tip.getTip().isBlank()){
                 throw new InvalidEntityException("The tip cannot be null/empty");
             }
-            return recyclingTipsRepository.save(tip);
+            RecyclingTips newTip = new RecyclingTips(tip.getTip());
+            return recyclingTipsRepository.save(newTip);
         }
     }
 
