@@ -18,7 +18,10 @@ import com.enviro.assessement.bulelanigabonewe.Exceptions.WasteCategoryNotFoundE
 import com.enviro.assessement.bulelanigabonewe.Models.Response;
 import com.enviro.assessement.bulelanigabonewe.Models.ResponseType;
 import com.enviro.assessement.bulelanigabonewe.Models.WasteCategories;
+import com.enviro.assessement.bulelanigabonewe.RequestDTOs.WasteCategoriesDTO;
 import com.enviro.assessement.bulelanigabonewe.Services.WasteCategoryService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/categories")
@@ -50,7 +53,7 @@ public class WasteCategoryController {
 
 
     @PostMapping("/")
-    public ResponseEntity<WasteCategories> addNewCategory(@RequestBody WasteCategories category){
+    public ResponseEntity<WasteCategories> addNewCategory(@RequestBody @Valid WasteCategoriesDTO category){
         return ResponseEntity.ok(wasteCategoryService.addNewCategory(category));
     }
 
@@ -63,7 +66,7 @@ public class WasteCategoryController {
     }
 
     @PutMapping("/")
-    public ResponseEntity<WasteCategories> updateCategory(@RequestBody WasteCategories category){
+    public ResponseEntity<WasteCategories> updateCategory(@RequestBody @Valid WasteCategoriesDTO category){
         return ResponseEntity.ok(wasteCategoryService.updateCategory(category));
     }
 }

@@ -10,6 +10,7 @@ import com.enviro.assessement.bulelanigabonewe.Exceptions.InvalidEntityException
 import com.enviro.assessement.bulelanigabonewe.Exceptions.WasteCategoryNotFoundException;
 import com.enviro.assessement.bulelanigabonewe.Models.WasteCategories;
 import com.enviro.assessement.bulelanigabonewe.Repositories.WasteCategoriesRepository;
+import com.enviro.assessement.bulelanigabonewe.RequestDTOs.WasteCategoriesDTO;
 
 @Service
 public class WasteCategoryService {
@@ -31,10 +32,10 @@ public class WasteCategoryService {
     }
 
 
-    public WasteCategories addNewCategory(WasteCategories category) {
+    public WasteCategories addNewCategory(WasteCategoriesDTO category) {
         if(!isInValidCategory(category)){
-
-            return categoriesRepository.save(category);
+            WasteCategories wasteCategory = new WasteCategories(category.getName(), category.getDescription());
+            return categoriesRepository.save(wasteCategory);
         } 
         throw new InvalidEntityException("The name/description of waste categories cannot be null");     
     }
@@ -50,7 +51,7 @@ public class WasteCategoryService {
         
     }
 
-    public WasteCategories updateCategory(WasteCategories category){
+    public WasteCategories updateCategory(WasteCategoriesDTO category){
 
         if(category.getCategoryId() == null){
             throw new IllegalArgumentException("The category id cannot be null");
@@ -68,14 +69,14 @@ public class WasteCategoryService {
             if(!category.getName().isEmpty() &&
                 !category.getName().isBlank() &&
                 !oldCategory.get().getName().equals(category.getName())){
-                oldCategory.get().setName(null);
+                oldCategory.get().setName(category.getName());
             }
             return categoriesRepository.save(oldCategory.get());
         }
     }
 
 
-    private boolean isInValidCategory(WasteCategories category){
+    private boolean isInValidCategory(WasteCategoriesDTO category){
         return category.getDescription().isEmpty() || 
                 category.getDescription().isBlank() ||
                 category.getName().isEmpty() ||
