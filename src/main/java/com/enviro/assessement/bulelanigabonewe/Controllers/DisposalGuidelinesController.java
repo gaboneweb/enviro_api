@@ -20,6 +20,7 @@ import com.enviro.assessement.bulelanigabonewe.Exceptions.DisposalGuidelineNotFo
 import com.enviro.assessement.bulelanigabonewe.Models.DisposalGuidelines;
 import com.enviro.assessement.bulelanigabonewe.Models.Response;
 import com.enviro.assessement.bulelanigabonewe.Models.ResponseType;
+import com.enviro.assessement.bulelanigabonewe.RequestDTOs.DisposalGuidelinesDTO;
 
 @RestController
 @RequestMapping("/guidelines")
@@ -65,12 +66,12 @@ public class DisposalGuidelinesController {
 
 
     @PutMapping("/")
-    public ResponseEntity<DisposalGuidelines> updateDisposalGuideline(@RequestBody DisposalGuidelines guideline){
+    public ResponseEntity<DisposalGuidelines> updateDisposalGuideline(@RequestBody DisposalGuidelinesDTO guideline){
         return ResponseEntity.ok(disposalGuidelinesService.updateDisposalGuideline(guideline));
     }
 
     @PostMapping("/")
-    public ResponseEntity<DisposalGuidelines> addNewDisposalGuideline(@RequestBody DisposalGuidelines guideline){
+    public ResponseEntity<DisposalGuidelines> addNewDisposalGuideline(@RequestBody DisposalGuidelinesDTO guideline){
         return ResponseEntity.ok(disposalGuidelinesService.addNewDisposalGuideline(guideline));
     }
 

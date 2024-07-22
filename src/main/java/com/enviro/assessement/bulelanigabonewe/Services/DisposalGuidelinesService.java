@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.enviro.assessement.bulelanigabonewe.Repositories.DisposalGuidelinesRepository;
+import com.enviro.assessement.bulelanigabonewe.RequestDTOs.DisposalGuidelinesDTO;
 import com.enviro.assessement.bulelanigabonewe.Exceptions.DisposalGuidelineNotFoundException;
 import com.enviro.assessement.bulelanigabonewe.Exceptions.InvalidEntityException;
 import com.enviro.assessement.bulelanigabonewe.Models.DisposalGuidelines;
@@ -56,7 +57,7 @@ public class DisposalGuidelinesService {
     }
 
 
-    public DisposalGuidelines updateDisposalGuideline(DisposalGuidelines guideline){
+    public DisposalGuidelines updateDisposalGuideline(DisposalGuidelinesDTO guideline){
 
         if(guideline.getGuidelineId() == null){
 
@@ -75,10 +76,10 @@ public class DisposalGuidelinesService {
                     currentGuideline.get().setGuideline(guideline.getGuideline());
             }
 
-            if(guideline.getCategory().getCategoryId() != null &&
-            guideline.getCategory().getCategoryId() != currentGuideline.get().getCategory().getCategoryId()){
+            if(guideline.getCategoryId() != null &&
+            guideline.getCategoryId() != currentGuideline.get().getCategory().getCategoryId()){
                 WasteCategories category = new WasteCategories();
-                category.setCategoryId(guideline.getCategory().getCategoryId());
+                category.setCategoryId(guideline.getCategoryId());
                 currentGuideline.get().setCategory(category);
             }
             return guidelinesRepository.save(currentGuideline.get());
@@ -86,9 +87,9 @@ public class DisposalGuidelinesService {
     }
 
 
-    public DisposalGuidelines addNewDisposalGuideline(DisposalGuidelines guideline){
+    public DisposalGuidelines addNewDisposalGuideline(DisposalGuidelinesDTO guideline){
 
-        if(guideline.getCategory() != null && guideline.getCategory().getCategoryId() == null){
+        if(guideline.getCategoryId() == null){
 
             throw new IllegalArgumentException("The category id cannot be null");
             
@@ -96,7 +97,11 @@ public class DisposalGuidelinesService {
             if(guideline.getGuideline().isEmpty() || guideline.getGuideline().isBlank()){
                 throw new InvalidEntityException("The guideline cannot be null/empty");
             }
-            return guidelinesRepository.save(guideline);
+            DisposalGuidelines newGuideline = new DisposalGuidelines(guideline.getGuideline());
+            WasteCategories category = new WasteCategories();
+            category.setCategoryId(guideline.getCategoryId());
+            newGuideline.setCategory(category);
+            return guidelinesRepository.save(newGuideline);
         }
     }
 }

@@ -89,6 +89,9 @@ public class RecyclingTipsService {
                 throw new InvalidEntityException("The tip cannot be null/empty");
             }
             RecyclingTips newTip = new RecyclingTips(tip.getTip());
+            WasteCategories category = new WasteCategories();
+            category.setCategoryId(tip.getCategoryId());
+            newTip.setCategory(category);
             return recyclingTipsRepository.save(newTip);
         }
     }
